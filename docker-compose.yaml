@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: vcs_ipatser
+    build: .
+    ports:
+      - 8000:8000
+    restart: on-failure
+    environment:
+      PORT: 8000
+      DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: postgres
+    container_name: vcs_postgres
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: "raktim"
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_DB: "db"
+      TZ: 'UTC'
+      PGTZ: 'UTC'

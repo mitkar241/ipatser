@@ -59,7 +59,7 @@ curl -X GET 'http://localhost:8000/movies' | jq
 
 ### INSERT ENTRY
 ```bash
-raktim@controller:~/ipatser$ curl -X POST 'http://localhost:8000/movies?movieid=4&moviename=movie4'
+curl -X POST 'http://localhost:8000/movies?movieid=4&moviename=movie4'
 ```
 ```bash
 {"type":"success","data":null,"message":"The movie has been inserted successfully!"}
