@@ -15,17 +15,54 @@ const (
 )
 
 /*
-vcs_postgres | 2022-03-28 18:21:38.429 UTC [25] LOG:  database system was shut down at 2022-03-28 18:19:35 UTC
-vcs_postgres | 2022-03-28 18:21:38.442 UTC [1] LOG:  database system is ready to accept connections
-vcs_ipatser | 2022/03/28 18:21:50 Getting movies...
-vcs_postgres | 2022-03-28 18:21:50.360 UTC [32] FATAL:  database "movies" does not exist
-vcs_ipatser | 2022/03/28 18:21:50 http: panic serving 172.18.0.1:57492: pq: database "movies" does not exist
+##########
+# Setup Database Initial
+##########
 */
+func setupDB0() *sql.DB { 
+    dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", DB_IP, DB_USER, DB_PASSWORD, "postgres")
+    db, err := sql.Open("postgres", dbinfo)
+    checkErr(err)
+    return db
+}
 
-// DB set up
-func setupDB() *sql.DB {
+/*
+##########
+# Setup Database
+##########
+*/
+func setupDB() *sql.DB { 
     dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", DB_IP, DB_USER, DB_PASSWORD, DB_NAME)
     db, err := sql.Open("postgres", dbinfo)
     checkErr(err)
     return db
+}
+
+/*
+##########
+# Create Database
+##########
+*/
+func CreateDatabase(dbName string) {
+    db := setupDB0()
+    printMessage("Creating Database " + dbName)
+    query := "CREATE DATABASE " + dbName
+    printMessage(query)
+    _, err := db.Exec(query)
+    // check errors
+    checkErr(err)
+    printMessage("successfully created DB")
+}
+
+/*
+##########
+# Create Table
+##########
+*/
+func CreateTableMovies() {
+    db := setupDB()
+    printMessage("Creating Table movies")
+    _, err := db.Exec("CREATE TABLE movies(id SERIAL, movieID varchar(50) NOT NULL, movieName varchar(50) NOT NULL, PRIMARY KEY (id))")
+    // check errors
+    checkErr(err)
 }

@@ -8,9 +8,11 @@ import (
     "github.com/gorilla/mux"
 )
 
-// Main function
 func main() {
     port := "8000"
+
+    CreateDatabase("movies")
+    CreateTableMovies()
 
     // Init the mux router
     router := mux.NewRouter()
