@@ -5,24 +5,41 @@
 ---
 
 ```bash
-raktim@controller:~/ipatser$ go mod init main
+go mod init main
+```
+```
 go: creating new go.mod: module main
 go: to add module requirements and sums:
 	go mod tidy
-raktim@controller:~/ipatser$ go test
+```
+```bash
+go test
+```
+```
 main.go:10:5: no required module provides package github.com/gorilla/mux; to add it:
 	go get github.com/gorilla/mux
 main.go:11:5: no required module provides package github.com/lib/pq; to add it:
 	go get github.com/lib/pq
-raktim@controller:~/ipatser$ go get github.com/gorilla/mux
+```
+```bash
+go get github.com/gorilla/mux
+```
+```
 go: downloading github.com/gorilla/mux v1.8.0
 go: added github.com/gorilla/mux v1.8.0
-raktim@controller:~/ipatser$ go get github.com/lib/pq
+```
+```bash
+go get github.com/lib/pq
+```
+```
 go: downloading github.com/lib/pq v1.10.4
 go: added github.com/lib/pq v1.10.4
-raktim@controller:~/ipatser$ ls
+```
+```bash
+ls
+```
+```
 go.mod  go.sum  main.go  script
-raktim@controller:~/ipatser$ 
 ```
 
 ## LIST ALL REST API ENDPOINTS
