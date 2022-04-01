@@ -15,7 +15,7 @@ base: alpine
 
 ## GO MOD
 ---
-
+- first init the mod file
 ```bash
 go mod init main
 ```
@@ -24,6 +24,8 @@ go: creating new go.mod: module main
 go: to add module requirements and sums:
 	go mod tidy
 ```
+
+- testing the requirements will provide us with the commands to get them.
 ```bash
 go test
 ```
@@ -33,6 +35,8 @@ main.go:10:5: no required module provides package github.com/gorilla/mux; to add
 main.go:11:5: no required module provides package github.com/lib/pq; to add it:
 	go get github.com/lib/pq
 ```
+
+- execute the commands provided
 ```bash
 go get github.com/gorilla/mux
 ```
@@ -47,6 +51,8 @@ go get github.com/lib/pq
 go: downloading github.com/lib/pq v1.10.4
 go: added github.com/lib/pq v1.10.4
 ```
+
+- as a result 2 files `go.mod` and `go.sum` will be created.
 ```bash
 ls
 ```
