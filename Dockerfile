@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:alpine as builder
+FROM golang:alpine as build-stage
 
 # Enable go modules
 ENV GO111MODULE=on
@@ -34,10 +34,11 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/vcs_ipatser .
 
 # Finally our multi-stage to build a small image
 # Start a new stage from scratch
-FROM scratch
+#FROM scratch
+FROM alpine as deployment-stage
 
 # Copy the Pre-built binary file
-COPY --from=builder /app/bin/vcs_ipatser .
+COPY --from=build-stage /app/bin/vcs_ipatser .
 
 # Run executable
-CMD ["./vcs_ipatser"]
+#CMD ["./vcs_ipatser"]
