@@ -83,6 +83,8 @@ postgres@controller:~$
 ---
 
 ```bash
+movies=# ALTER USER raktim CREATEDB;
+ALTER ROLE
 movies=# GRANT pg_read_all_data TO raktim;
 GRANT ROLE
 movies=# GRANT pg_write_all_data TO raktim;
@@ -94,7 +96,7 @@ movies=# \du
  Role name |                         Attributes                         |              Member of               
 -----------+------------------------------------------------------------+--------------------------------------
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- raktim    |                                                            | {pg_read_all_data,pg_write_all_data}
+ raktim    | Create DB                                                  | {pg_read_all_data,pg_write_all_data}
 ```
 
 ## Creating a New Database

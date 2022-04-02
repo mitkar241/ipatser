@@ -40,5 +40,8 @@ FROM alpine as deployment-stage
 # Copy the Pre-built binary file
 COPY --from=build-stage /app/bin/vcs_ipatser .
 
+# Install coreutils. (alpine image does not have coreutils in it)
+RUN apk update && apk add --no-cache coreutils
+
 # Run executable
 #CMD ["./vcs_ipatser"]

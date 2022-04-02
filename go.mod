@@ -1,4 +1,4 @@
-module main
+module github.com/ipatser
 
 go 1.18
 

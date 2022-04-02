@@ -12,7 +12,7 @@ services:
     environment:
       PORT: 8000
       DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
-    command: sh -c "./vcs_ipatser"
+    command: sh -c "nohup ./vcs_ipatser &"
     volumes:
       - .:/app
     depends_on:

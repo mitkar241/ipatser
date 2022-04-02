@@ -1,4 +1,4 @@
-package main
+package movies
 
 import (
     "encoding/json"
@@ -15,11 +15,11 @@ import (
 */
 func GetMovies(res http.ResponseWriter, req *http.Request) {
     db := setupDB()
-    printMessage("Getting movies...")
+    PrintMessage("Getting movies...")
     // Get all movies from movies table that don't have movieID = "1"
     rows, err := db.Query("SELECT * FROM movies")
     // check errors
-    checkErr(err)
+    CheckErr(err)
     // var response []JsonResponse
     var movies []Movie
     // Foreach movie
@@ -29,7 +29,7 @@ func GetMovies(res http.ResponseWriter, req *http.Request) {
         var movieName string
         err = rows.Scan(&id, &movieID, &movieName)
         // check errors
-        checkErr(err)
+        CheckErr(err)
         movies = append(movies, Movie{MovieID: movieID, MovieName: movieName})
     }
     var response = JsonResponse{Type: "success", Data: movies}
@@ -50,12 +50,12 @@ func CreateMovie(res http.ResponseWriter, req *http.Request) {
         response = JsonResponse{Type: "error", Message: "You are missing movieID or movieName parameter."}
     } else {
         db := setupDB()
-        printMessage("Inserting movie into DB")
+        PrintMessage("Inserting movie into DB")
         fmt.Println("Inserting new movie with ID: " + movieID + " and name: " + movieName)
         var lastInsertID int
         err := db.QueryRow("INSERT INTO movies(movieID, movieName) VALUES($1, $2) returning id;", movieID, movieName).Scan(&lastInsertID)
         // check errors
-        checkErr(err)
+        CheckErr(err)
         response = JsonResponse{Type: "success", Message: "The movie has been inserted successfully!"}
     }
     json.NewEncoder(res).Encode(response)
@@ -75,10 +75,10 @@ func DeleteMovie(res http.ResponseWriter, req *http.Request) {
         response = JsonResponse{Type: "error", Message: "You are missing movieID parameter."}
     } else {
         db := setupDB()
-        printMessage("Deleting movie from DB")
+        PrintMessage("Deleting movie from DB")
         _, err := db.Exec("DELETE FROM movies where movieID = $1", movieID)
         // check errors
-        checkErr(err)
+        CheckErr(err)
         response = JsonResponse{Type: "success", Message: "The movie has been deleted successfully!"}
     }
     json.NewEncoder(res).Encode(response)
@@ -91,11 +91,11 @@ func DeleteMovie(res http.ResponseWriter, req *http.Request) {
 */
 func DeleteMovies(res http.ResponseWriter, req *http.Request) {
     db := setupDB()
-    printMessage("Deleting all movies...")
+    PrintMessage("Deleting all movies...")
     _, err := db.Exec("DELETE FROM movies")
     // check errors
-    checkErr(err)
-    printMessage("All movies have been deleted successfully!")
+    CheckErr(err)
+    PrintMessage("All movies have been deleted successfully!")
     response := JsonResponse{Type: "success", Message: "All movies have been deleted successfully!"}
     json.NewEncoder(res).Encode(response)
 }

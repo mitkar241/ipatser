@@ -1,16 +1,16 @@
-package main
+package utils
 
 import (
 	"log"
 )
 
 // Function for handling messages
-func printMessage(message string) {
+func PrintMessage(message string) {
     log.Println(message)
 }
 
 // Function for handling errors
-func checkErr(err error) {
+func CheckErr(err error) {
     if err != nil {
         panic(err)
     }
