@@ -21,7 +21,7 @@ const (
 # Setup Database Initial
 ##########
 */
-func setupDB0() *sql.DB { 
+func SetupDB0() *sql.DB { 
     dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", DB_IP, DB_USER, DB_PASSWORD, "postgres")
     db, err := sql.Open("postgres", dbinfo)
     utils.CheckErr(err)
@@ -33,7 +33,7 @@ func setupDB0() *sql.DB {
 # Setup Database
 ##########
 */
-func setupDB() *sql.DB { 
+func SetupDB() *sql.DB { 
     dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", DB_IP, DB_USER, DB_PASSWORD, DB_NAME)
     db, err := sql.Open("postgres", dbinfo)
     utils.CheckErr(err)
@@ -46,7 +46,7 @@ func setupDB() *sql.DB {
 ##########
 */
 func CreateDatabase(dbName string) {
-    db := setupDB0()
+    db := SetupDB0()
     utils.PrintMessage("Creating Database " + dbName)
     query := "CREATE DATABASE " + dbName
     utils.PrintMessage(query)
@@ -67,7 +67,7 @@ func CreateDatabase(dbName string) {
 ##########
 */
 func CreateTableMovies() {
-    db := setupDB()
+    db := SetupDB()
     utils.PrintMessage("Creating Table movies")
     _, err := db.Exec("CREATE TABLE movies(id SERIAL, movieID varchar(50) NOT NULL, movieName varchar(50) NOT NULL, PRIMARY KEY (id))")
     if err == nil {

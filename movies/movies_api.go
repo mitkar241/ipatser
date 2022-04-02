@@ -4,6 +4,8 @@ import (
     "encoding/json"
     "fmt"
     "net/http"
+    "github.com/ipatser/database"
+    "github.com/ipatser/utils"
 
     "github.com/gorilla/mux"
 )
@@ -14,12 +16,12 @@ import (
 ##########
 */
 func GetMovies(res http.ResponseWriter, req *http.Request) {
-    db := setupDB()
-    PrintMessage("Getting movies...")
+    db := database.SetupDB()
+    utils.PrintMessage("Getting movies...")
     // Get all movies from movies table that don't have movieID = "1"
     rows, err := db.Query("SELECT * FROM movies")
     // check errors
-    CheckErr(err)
+    utils.CheckErr(err)
     // var response []JsonResponse
     var movies []Movie
     // Foreach movie
@@ -29,7 +31,7 @@ func GetMovies(res http.ResponseWriter, req *http.Request) {
         var movieName string
         err = rows.Scan(&id, &movieID, &movieName)
         // check errors
-        CheckErr(err)
+        utils.CheckErr(err)
         movies = append(movies, Movie{MovieID: movieID, MovieName: movieName})
     }
     var response = JsonResponse{Type: "success", Data: movies}
@@ -49,13 +51,13 @@ func CreateMovie(res http.ResponseWriter, req *http.Request) {
     if movieID == "" || movieName == "" {
         response = JsonResponse{Type: "error", Message: "You are missing movieID or movieName parameter."}
     } else {
-        db := setupDB()
-        PrintMessage("Inserting movie into DB")
+        db := database.SetupDB()
+        utils.PrintMessage("Inserting movie into DB")
         fmt.Println("Inserting new movie with ID: " + movieID + " and name: " + movieName)
         var lastInsertID int
         err := db.QueryRow("INSERT INTO movies(movieID, movieName) VALUES($1, $2) returning id;", movieID, movieName).Scan(&lastInsertID)
         // check errors
-        CheckErr(err)
+        utils.CheckErr(err)
         response = JsonResponse{Type: "success", Message: "The movie has been inserted successfully!"}
     }
     json.NewEncoder(res).Encode(response)
@@ -74,11 +76,11 @@ func DeleteMovie(res http.ResponseWriter, req *http.Request) {
     if movieID == "" {
         response = JsonResponse{Type: "error", Message: "You are missing movieID parameter."}
     } else {
-        db := setupDB()
-        PrintMessage("Deleting movie from DB")
+        db := database.SetupDB()
+        utils.PrintMessage("Deleting movie from DB")
         _, err := db.Exec("DELETE FROM movies where movieID = $1", movieID)
         // check errors
-        CheckErr(err)
+        utils.CheckErr(err)
         response = JsonResponse{Type: "success", Message: "The movie has been deleted successfully!"}
     }
     json.NewEncoder(res).Encode(response)
@@ -90,12 +92,12 @@ func DeleteMovie(res http.ResponseWriter, req *http.Request) {
 ##########
 */
 func DeleteMovies(res http.ResponseWriter, req *http.Request) {
-    db := setupDB()
-    PrintMessage("Deleting all movies...")
+    db := database.SetupDB()
+    utils.PrintMessage("Deleting all movies...")
     _, err := db.Exec("DELETE FROM movies")
     // check errors
-    CheckErr(err)
-    PrintMessage("All movies have been deleted successfully!")
+    utils.CheckErr(err)
+    utils.PrintMessage("All movies have been deleted successfully!")
     response := JsonResponse{Type: "success", Message: "All movies have been deleted successfully!"}
     json.NewEncoder(res).Encode(response)
 }

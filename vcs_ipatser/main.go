@@ -5,6 +5,7 @@ import (
     "log"
     "net/http"
     "github.com/ipatser/database"
+    "github.com/ipatser/movies"
 
     "github.com/gorilla/mux"
 )
@@ -21,16 +22,16 @@ func main() {
     // Route handles & endpoints
 
     // Get all movies
-    router.HandleFunc("/movies", database.GetMovies).Methods("GET")
+    router.HandleFunc("/movies", movies.GetMovies).Methods("GET")
 
     // Create a movie
-    router.HandleFunc("/movies", database.CreateMovie).Methods("POST")
+    router.HandleFunc("/movies", movies.CreateMovie).Methods("POST")
 
     // Delete a specific movie by the movieID
-    router.HandleFunc("/movies/{movieid}", database.DeleteMovie).Methods("DELETE")
+    router.HandleFunc("/movies/{movieid}", movies.DeleteMovie).Methods("DELETE")
 
     // Delete all movies
-    router.HandleFunc("/movies", database.DeleteMovies).Methods("DELETE")
+    router.HandleFunc("/movies", movies.DeleteMovies).Methods("DELETE")
 
     // serve the app
     fmt.Println("Server at " + port + "...")
