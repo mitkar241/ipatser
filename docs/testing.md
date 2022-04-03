@@ -60,3 +60,16 @@ BenchmarkMoviesDelAll-2   	1000000000	         0.06414 ns/op
 PASS
 ok  	github.com/ipatser/vcs_ipatser	5.729s
 ```
+
+```bash
+~/workspace/src/github.com/ipatser/vcs_ipatser$ go test -bench=MoviesDelAll
+```
+```
+goos: linux
+goarch: amd64
+pkg: github.com/ipatser/vcs_ipatser
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkMoviesDelAll-2   	1000000000	         0.06850 ns/op
+PASS
+ok  	github.com/ipatser/vcs_ipatser	5.450s
+```

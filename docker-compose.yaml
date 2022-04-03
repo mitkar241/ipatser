@@ -2,27 +2,9 @@ version: '3'
 
 services:
 
-  app:
-    container_name: ipatser
-    build: .
-    image: vcs_ipatser
-    ports:
-      - 8000:8000
-    restart: on-failure
-    environment:
-      PORT: 8000
-      DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
-    command: sh -c "nohup ./vcs_ipatser &"
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-    links:
-      - db
-
   db:
+    container_name: postgres_app
     image: postgres
-    container_name: vcs_postgres
     ports:
       - '5433:5432'
     environment:
@@ -31,3 +13,49 @@ services:
       POSTGRES_DB: "db"
       TZ: 'UTC'
       PGTZ: 'UTC'
+
+  build:
+    container_name: ipatser_app_build
+    build:
+      context: .
+      dockerfile: build.ipatser.dockerfile
+    image: ipatser/build
+    #command: sh -c "sleep infinity"
+
+  deploy:
+    container_name: ipatser_app_deploy
+    build:
+      context: .
+      dockerfile: deploy.ipatser.dockerfile
+    image: ipatser/deploy
+    ports:
+      - 8000:8000
+    restart: on-failure
+    environment:
+      PORT: 8000
+      DB_CONN: "postgres://user:password@db:5432/db?sslmode=disable"
+    command: sh -c "/vcs_ipatser"
+    #command: sh -c "sleep infinity"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - build
+    links:
+      - db
+      - build
+
+  test:
+    container_name: ipatser_app_test
+    image: ipatser/build
+    restart: on-failure
+    command: sh -c "sh test.sh"
+    #command: sh -c "sleep infinity"
+    depends_on:
+      - db
+      - build
+      - deploy
+    links:
+      - db
+      - build
+      - deploy

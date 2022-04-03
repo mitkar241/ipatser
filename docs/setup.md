@@ -7,6 +7,7 @@
 ```bash
 cd $HOME
 mkdir -p workspace/src/github.com
+cd workspace/src/github.com
 git clone https://github.com/raktimhalder241/ipatser.git
 ```
 

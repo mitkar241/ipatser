@@ -4,7 +4,7 @@
 ## Deployment : Container
 ---
 ```bash
-docker-compose down; docker image prune -f; docker rmi vcs_ipatser; docker-compose up;
+make dcpipe
 ```
 
 ```
@@ -12,3 +12,9 @@ name: vcs_ipatser
 size: 13.1MB
 base: alpine
 ```
+
+## Important Links
+---
+- [Setting up the App](docs/setup.md)
+- [Endpoints for Movies](docs/movies.md)
+- [Testing the App](docs/testing.md)
