@@ -1,6 +1,7 @@
 # Testing
 ---
 
+- simple `go test`
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go test
 ```
@@ -9,6 +10,7 @@ PASS
 ok  	github.com/ipatser/vcs_ipatser	0.798s
 ```
 
+- `go test` with additional information
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go test -v
 ```
@@ -25,6 +27,7 @@ PASS
 ok  	github.com/ipatser/vcs_ipatser	0.720s
 ```
 
+- to get code coverage of the testcases in a file
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go test -coverprofile=coverage.out
 ```
@@ -33,6 +36,7 @@ PASS
 coverage: 0.0% of statements
 ```
 
+- content of the `coverage.out` file
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ cat coverage.out 
 ```
@@ -41,12 +45,14 @@ mode: set
 github.com/ipatser/vcs_ipatser/main.go:13.13,39.2 10 0
 ```
 
+- to display code coverage using html
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go tool cover -html=coverage.out
 ```
 
 ![vcs_ipatser.coverage.png](/static/vcs_ipatser.coverage.png)
 
+- to get benchmark
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go test -bench=.
 ```
@@ -61,6 +67,7 @@ PASS
 ok  	github.com/ipatser/vcs_ipatser	5.729s
 ```
 
+- to run only specific benchmark function
 ```bash
 ~/workspace/src/github.com/ipatser/vcs_ipatser$ go test -bench=MoviesDelAll
 ```
